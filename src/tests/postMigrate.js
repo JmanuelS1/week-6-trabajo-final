@@ -1,14 +1,11 @@
 const sequelize = require('../utils/connection')
-const user = require('../utils/createData/user')
 require('../models')
 
 const testMigrate = async () => {
 
    try {
       await sequelize.sync({ force: true })
-      console.log('se restablecio la base de datos 😎')
-
-      await user()
+      console.log('se restablecio la base de datos ✅')
       
       process.exit()
    } catch (error) {
