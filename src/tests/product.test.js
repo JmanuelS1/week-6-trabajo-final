@@ -17,7 +17,7 @@ beforeAll(async () => {
       password: "zarquiz1234",
    }
    const res = await request(app)
-      .post(`${BASE_URL}/login`)
+      .post('/api/v1/users/login')
       .send(body)
 
    TOKEN = res.body.token
@@ -35,7 +35,6 @@ beforeAll(async () => {
 })
 
 test("POST -> 'BASE_URL', should return status code 201, and res.body.title === product.title", async () => {
-
    const res = await request(app)
       .post(BASE_URL)
       .set('Authorization', `Bearer ${TOKEN}`)
@@ -83,8 +82,8 @@ test("PUT -> 'BASE_URL/:id', should return status code 200, res.body.title === p
 
 test("DELETE -> 'BASE_URL/:id', should return status code 204", async () => {
    const res = await request(app)
-   .delete(`${BASE_URL}/${productId}`)
-   .set('Authorization', `Bearer ${TOKEN}`)
+      .delete(`${BASE_URL}/${productId}`)
+      .set('Authorization', `Bearer ${TOKEN}`)
 
    expect(res.statusCode).toBe(204)
 })
