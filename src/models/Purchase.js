@@ -1,13 +1,13 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/connection');
 
-const Cart = sequelize.define('cart', {
+const Purchase = sequelize.define('purchase', {
     quantity: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
     //userId
-    //producId
+    //productId
 });
 
-module.exports = Cart;
+module.exports = Purchase;
