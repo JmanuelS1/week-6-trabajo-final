@@ -1,17 +1,17 @@
-const catchError = require('../utils/catchError');
-const Purchase = require('../models/Purchase');
+const catchError = require('../utils/catchError')
+const Purchase = require('../models/Purchase')
 const Cart = require('../models/Cart')
 const Product = require('../models/Product')
 const Category = require('../models/Category')
 
-const getAll = catchError(async(req, res) => {
-   const userId = res.user.id
+const getAll = catchError(async (req, res) => {
+   const userId = req.user.id
    const result = await Purchase.findAll({
       where: { userId },
       include: [
          {
             model: Product,
-            attributes: ['title','price'],
+            attributes: ['title', 'price'],
             include: [
                {
                   model: Category,
@@ -21,11 +21,11 @@ const getAll = catchError(async(req, res) => {
          }
       ]
    })
-    return res.json(result);
-});
+   return res.json(result)
+})
 
-const create = catchError(async(req, res) => {
-  
+const create = catchError(async (req, res) => {
+
    const userId = req.user.id
 
    const cart = await Cart.findAll({
@@ -34,19 +34,19 @@ const create = catchError(async(req, res) => {
       attributes: ['quantity', 'userId', 'productId']
    })
 
-   if(!cart) return res.sendStatus(404)
+   if (!cart) return res.sendStatus(404)
 
    const result = await Purchase.bulkCreate(cart)
-   if(!result) return res.sendStatus(404)
+   if (!result) return res.sendStatus(404)
 
-   await Cart.destroy({where: { userId }})
+   await Cart.destroy({ where: { userId } })
 
-    return res.status(201).json(result);
-});
+   return res.status(201).json(result)
+})
 
 
 
 module.exports = {
-    getAll,
-    create
+   getAll,
+   create
 }

@@ -1,6 +1,7 @@
 const Cart = require('./Cart')
 const Category = require('./Category')
 const Product = require('./Product')
+const ProductImg = require('./ProductImg')
 const Purchase = require('./Purchase')
 const User = require('./User')
 
@@ -25,6 +26,10 @@ User.hasMany(Purchase)
 //Purchase -> productId
 Purchase.belongsTo(Product) //! aqui se crea productId al modelo Purchase
 Product.hasMany(Purchase)
+
+//productImg -> productId
+ProductImg.belongsTo(Product) //! aqui se crea productId al modelo productImg
+Product.hasMany(ProductImg)
 
 
 
