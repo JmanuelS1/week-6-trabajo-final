@@ -24,8 +24,6 @@ beforeAll(async () => {
     TOKEN = res.body.token
     userId = res.body.user.id
 
-    console.log(res.body)
-
     productBody = {
         title: "productTest",
         description: "lorem20",

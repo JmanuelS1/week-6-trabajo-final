@@ -13,6 +13,8 @@ const create = catchError(async (req, res) => {
    //URL
    //productId -> vamos hacer un endpoint
    const { filename } = req.file
+   const imageDB = await ProductImg.findOne({where: { filename }})
+   if (imageDB) return res.sendStatus(404)
    const url = `${req.protocol}://${req.headers.host}/uploads/${filename}`
    const result = await ProductImg.create({ filename, url })
    return res.status(201).json(result)
@@ -23,8 +25,11 @@ const remove = catchError(async (req, res) => {
    const { id } = req.params
 
    const result = await ProductImg.findByPk(id)
-   if(!result) return res.sendStatus(404)
-      
+   if (!result) return res.sendStatus(404)
+
+   const imageFilePath = path.join(__dirname, '..', 'public', 'uploads', result.filename)
+   fs.unlinkSync(imageFilePath) //!elimina el archivo junto al destroy
+   await result.destroy()
 
    return res.sendStatus(204)
 })

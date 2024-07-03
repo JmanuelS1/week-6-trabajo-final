@@ -2,13 +2,15 @@ require('../models')
 const request = require('supertest')
 const app = require('../app')
 const Category = require('../models/Category')
+const ProductImg = require('../models/ProductImg')
 
 const BASE_URL = '/api/v1/products'
-let TOKEN, category, product, productId
+let TOKEN, category, product, productId, productImage
 
 
 afterAll(async () => {
    await category.destroy()
+   await productImage.destroy()
 })
 
 beforeAll(async () => {
@@ -79,6 +81,27 @@ test("PUT -> 'BASE_URL/:id', should return status code 200, res.body.title === p
    expect(res.body).toBeDefined()
    expect(res.body.title).toBe(productUpdate.title)
 })
+
+
+test("POST --> 'BASE_URL/:id//images' should return status code 200 and res.body.length = 1", async () => {
+
+   productImage = await ProductImg.create({
+       url: 'lorem',
+       filename: 'lorem'
+   });
+
+   const res = await request(app)
+       .post(`${BASE_URL}/${productId}/images`)
+       .send([productImage.id])
+       .set('Authorization', `Bearer ${TOKEN}` )
+
+   expect(res.statusCode).toBe(200)
+   expect(res.body).toBeDefined()
+
+   expect(res.body[0].productId).toBeDefined()
+   expect(res.body[0].productId).toBe(productImage.id)
+});
+
 
 test("DELETE -> 'BASE_URL/:id', should return status code 204", async () => {
    const res = await request(app)

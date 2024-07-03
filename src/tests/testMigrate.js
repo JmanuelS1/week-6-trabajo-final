@@ -1,5 +1,5 @@
 const sequelize = require('../utils/connection')
-const user = require('../utils/createData/user')
+const user = require('../tests/createData/user')
 require('../models')
 
 const testMigrate = async () => {
