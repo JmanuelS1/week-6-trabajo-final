@@ -37,6 +37,18 @@ test('POST => BASE_URL should return statusCode 201, and res.body.filename and r
 
 })
 
+test('GET => BASE_URL should return statusCode 200, res.body[0].filename and res.body[0].url to be defined', async() => {
+
+  const res = await request(app)
+      .get(BASE_URL)
+      .set('Authorization', `Bearer ${token}`)
+
+  expect(res.statusCode).toBe(200)
+  expect(res.body[0].filename).toBeDefined()
+  expect(res.body[0].url).toBeDefined()
+  expect(res.body).toHaveLength(1)
+})
+
 test('DELETE => BASE_URL should return status 204', async () => {
 
   const res = await request(app)

@@ -83,7 +83,7 @@ test("PUT -> 'BASE_URL/:id', should return status code 200, res.body.title === p
 })
 
 
-test("POST --> 'BASE_URL/:id//images' should return status code 200 and res.body.length = 1", async () => {
+test("POST --> 'BASE_URL/:id/images' should return status code 200 and res.body.length = 1", async () => {
 
    productImage = await ProductImg.create({
        url: 'lorem',
